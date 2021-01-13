@@ -19,9 +19,12 @@
     position: relative;
     margin: 40px auto;
     transform: rotate(45deg);
+    animation-name: platzi-base;
+    animation-duration: 3.5s;
+    animation-iteration-count: infinite;
   }
   .platzi-left {
-    width: 80%;
+    width: 100%;
     height: 65%;
     border: 20px solid #97c93e; /*top right left bottom*/
     border-bottom: none;
@@ -29,6 +32,9 @@
     box-sizing: border-box;
     position: relative;
     top: 1px;
+    animation-name: platzi-left;
+    animation-duration: 3.5s;
+    animation-iteration-count: infinite;
   }
   .platzi-right {
     width: 100%;
@@ -37,6 +43,24 @@
     border-top: none;
     border-radius: 0 0 20px 20px;
     box-sizing: border-box;
+  }
+  @keyframes platzi-base {
+    0%, 100% {
+      opacity: 0;
+      transform: rotate(0deg) scale(.3);
+    }
+    30%, 80% {
+      opacity: 1;
+      transform: rotate(405deg) scale(1);
+    }
+  }
+  @keyframes platzi-left {
+    0%, 100% {
+      width: 100%;
+    }
+    60% {
+      width: 80%;
+    }
   }
 </style>
 <body>
