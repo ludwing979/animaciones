@@ -6,19 +6,83 @@
   <title>Animaciones de entrada y salida</title>
   <style>
     body {
-      height: 100vh;
+      /* height: 100vh; */
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      flex-direction: column;
     }
-    .cuadrado {
-      width: 200px;
-      height: 200px;
-      background-color: #7dc900;
+    img {
+      width: 99vw;
+    }
+    .btn {
+      text-align: center;
+      padding: .6em .8em .8em;
+      background-color: lightgray;
+      border: none;
+      color: white;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: inset 0 -.2em rgba(0, 0, 0, .2);
+      outline: 0;
+      transition: .2s;
+      will-change: transform;
+    }
+    .btn.primary {
+      background-color: #7dc800;
+    }
+    .btn.warning {
+      background-color: #ff463b;
+    }
+    .btn:active {
+      transform: scale(.9);
+    }
+    .container-close {
+      position: relative;
+      width: 100%;
+    }
+    .container-close > button {
+      position: absolute;
+      right: 0;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      width: 30px;
+      height: 30px;
+    }
+    .container-close > button:active {
+      transform: scale(.9);
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, .5);
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .3s ease-out;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal {
+      width: 500px;
+      background-color: white;
       /* animation: name time estado; */
-      animation: animationOut .8s forwards;
+      padding: 2em;
+      border-radius: .5em;
+      text-align: center;
     }
-    @keyframes animationIn {
+    @keyframes modalIn {
       0% {
         transform: translateY(-3000px);
       }
@@ -32,7 +96,7 @@
         transform: translateY(5px);
       }
     }
-    @keyframes animationOut {
+    @keyframes modalOut {
       0%{
 				transform: translateY(0);	
 			}
@@ -52,6 +116,59 @@
   </style>
 </head>
 <body>
-  <div class="cuadrado"></div>
+  <img id="img-click" src="platzi.png" alt="platzi">
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal">
+      <div class="container-close">
+        <button id="cerrar-modal">X</button>
+      </div>
+      <h1>Atencion!</h1>
+      <p>Estas a punto de crear una ventana de modal muy chida</p>
+      <p>Te gusto?</p>
+      <div class="modal-buttons">
+        <button class="btn primary" id="hide-modal">Si, esta chido</button>
+        <button class="btn warning" id="close-modal">No, :(</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const $hideButton = document.getElementById('hide-modal');
+    const $closeButton = document.getElementById('cerrar-modal');
+    const $noButton = document.getElementById('close-modal');
+    const $modal = document.getElementById('modal');
+    const $overlay = document.getElementById('overlay');
+    const $imagen = document.getElementById('img-click');
+
+    $imagen.addEventListener('click', (event) => {
+      $overlay.style.transition = '.3s ease-out';
+      $modal.style.animation = 'modalIn .8s';
+      $overlay.classList.add('active');
+    })
+
+    $hideButton.addEventListener('click', (event) => {
+      closeModal()
+    });
+
+    $closeButton.addEventListener('click', (event) => {
+      closeModal()
+    });
+
+    $noButton.addEventListener('click', (event) => {
+      closeModal()
+    });
+    
+    $overlay.addEventListener('click', (event) => {
+      if (event.target === $overlay) {
+        closeModal()
+      }
+    });
+
+    function closeModal() {
+      $overlay.style.transition = '1.1s ease-out';
+      $modal.style.animation = 'modalOut .8s forwards';
+      $overlay.classList.remove('active');
+    }
+
+  </script>
 </body>
 </html>
